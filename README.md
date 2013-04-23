@@ -1,28 +1,15 @@
-MSP430-LCD-Driver
+8-bit Parallel interface 16 segment by 2 line LCD Driver for the MSP430G2553 MCU
 =================
 
-8-bit Parallel interface LCD Driver for the MSP430G2553 MCU
+This allows interfacing of a standard LCD with an 8-bit parallel interface to the MSP430G2553 microcontroller from Texas Instruments.  This version of the driver requires that the MCU is operating at a 1MHz clock when communicating with the LCD. 
 
-This allows interfacing of a standard LCD with an 8-bit parallel interface to the MSP430G2553 microcontroller from Texas Instruments.  
+The MSP430_lcd.h header file contains detailed descriptions of each function created for communication between the MCU and the LCD.  Definitions for the instructions for the LCD controller are also in the header file, as well as a table describing the pins used.
 
-The MSP430_lcd.h header file contains detailed descriptions of each function created for communication between the MCU and the LCD.  Definitions for the instructions for the LCD controller are also in the header file, as well as the following pin out digram:
+To use this driver, clone the repository and include the MSP430_lcd.h and MSP430_lcd.c header and source files in your project.  Pay attention to the pins used for the driver, and avoid collisions in your design.  Initialize the LCD by calling the initialization function in your program main.
+    lcd_init();
 
-  		                 |	   LCD	         |
-   LCD Pin #             |       Function		 |	 MSP Pin #
-                     ------------------------------------------
-  	PIN 14	        |          DB7		 |	  P1.7
-  	PIN 13	        |          DB6		 |	  P1.6
-  	PIN 12	        |          DB5		 |	  P1.5
-  	PIN 11	        |          DB4		 |	  P1.4
-  	PIN 10	        |          DB3		 |	  P1.3
-  	PIN 9		|	   DB2		 |	  P1.2
-  	PIN 8		|	   DB1		 |	  P1.1
-  	PIN 7		|	   DB0		 |	  P1.0
-  	PIN 6		|	   E		         |	  P2.0
-  	PIN 5		|	   R/W		 |	  P2.1
-  	PIN 4		|	   RS		         |	  P2.2
-  	PIN 3		|	   CONTRAST	 |	  GND
-  	PIN 2		|	   VCC		 |	  5V
-  	PIN 1		|	   VSS		 |	  GND
+You can write a string to the LCD with the print string function.  The following example writes the string "Hello World!" with a small delay between each character to the top line of the LCD.
+    lcd_printString("Hello world!", DELAY, TOP_LINE);
 
-note: the MSP430 uses 3.3V logic, and some LCDs use 5V logic, but can be powered with 3.3V logic level data.  Do not attempt to read from the LCD unless you have taken proper precautions for protecting the MSP's input ports--utilizing a logic translator IC for example.
+-------------------------
+NOTE: The MSP430 uses 3.3V logic, and some LCDs use 5V logic, but can be powered with 3.3V logic level data.  Do not attempt to read from the LCD unless you have taken proper precautions for protecting the MSP's input ports--utilizing a logic translator IC for example.
