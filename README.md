@@ -9,7 +9,7 @@ Using my driver in your project
 -------------------------
 To use this driver, clone the repository and include the ````MSP430_lcd.h```` and ````MSP430_lcd.c```` header and source files in your project.  Pay attention to the pins used for the driver, and avoid collisions in your design.  Initialize the LCD by calling the initialization function in your program main.
     
-     lcd_init();
+     lcd_init(MODE_RT_NOSHIFT);
 
 You can write a string to the LCD with the print string function.  The following example writes the string "Hello World!" with a small delay between each character to the top line of the LCD.
     
