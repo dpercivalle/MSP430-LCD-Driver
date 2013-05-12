@@ -2,8 +2,7 @@
  * MSP430_lcd.h
  *
  *	Created on: Apr 8, 2013
- *		Author: Donald Percivalle
- *            Alex Lin
+ *		Author: donaldpercivalle
  */
 #ifndef MSP430_LCD_H_
 #define MSP430_LCD_H_
@@ -12,21 +11,21 @@
   * MSP430 LCD interface
   * PIN 14 on the LCD is the left-most pin
   *
-  *		       |	    LCD	 |
-  * LCD Pin #|  Function |	 MSP Pin #
+  *		      |	    LCD	    |
+  * LCD Pin #|  Function	|	 MSP Pin #
   *------------------------------------------
-  *	PIN 14	|	   DB7		 |	  P1.7
-  *	PIN 13	|	   DB6		 |	  P1.6
-  *	PIN 12	|	   DB5		 |	  P1.5
-  *	PIN 11	|	   DB4		 |	  P1.4
-  *	PIN 10	|	   DB3		 |	  P1.3
-  *	PIN 9		|	   DB2		 |	  P1.2
-  *	PIN 8		|	   DB1		 |	  P1.1
-  *	PIN 7		|	   DB0		 |	  P1.0
+  *	PIN 14	|	   DB7		 |	  P1.3
+  *	PIN 13	|	   DB6		 |	  P1.2
+  *	PIN 12	|	   DB5		 |	  P1.1
+  *	PIN 11	|	   DB4		 |	  P1.0
+  *	PIN 10	|	   DB3		 |	  NC
+  *	PIN 9		|	   DB2		 |	  NC
+  *	PIN 8		|	   DB1		 |	  NC
+  *	PIN 7		|	   DB0		 |	  NC
   *	PIN 6		|	   E		   |	  P2.2
   *	PIN 5		|	   R/W		 |	  P2.1
   *	PIN 4		|	   RS		   |	  P2.0
-  *	PIN 3		|	   CONTRAST|	  GND
+  *	PIN 3		|	   CONTRAST|	  GND (POT)
   *	PIN 2		|	   VCC		 |	  5V
   *	PIN 1		|	   VSS		 |	  GND
   **/
@@ -43,7 +42,7 @@
 /**
   * Define bit masks
   **/
-#define		LCD_DATA_MASK		  0xFF
+#define		LCD_DATA_MASK		  0x0F
 #define		LCD_CTRL_MASK		  0x07
 
 /**
@@ -51,24 +50,20 @@
   * We've set DATA PIN TO 0, 1, 2, 3, 4,5,6,7
   * for easy translation
   **/
-#define		LCD_PIN_EN			  BIT2			// P2.2
+#define		LCD_PIN_EN			  BIT2			// P2.0
 #define		LCD_PIN_RW			  BIT1			// P2.1
-#define		LCD_PIN_RS			  BIT0			// P2.0
-#define		LCD_PIN_D7			  BIT7			// P1.7
-#define		LCD_PIN_D6			  BIT6			// P1.6
-#define		LCD_PIN_D5			  BIT5			// P1.5
-#define		LCD_PIN_D4			  BIT4			// P1.4
-#define		LCD_PIN_D3			  BIT3			// P1.3
-#define		LCD_PIN_D2			  BIT2			// P1.2
-#define		LCD_PIN_D1			  BIT1			// P1.1
-#define		LCD_PIN_D0			  BIT0			// P1.0
+#define		LCD_PIN_RS			  BIT0			// P2.2
+#define		LCD_PIN_D7			  BIT3			// P1.3
+#define		LCD_PIN_D6			  BIT2			// P1.2
+#define		LCD_PIN_D5			  BIT1			// P1.1
+#define		LCD_PIN_D4			  BIT0			// P1.0
 
 /**
   * LCD Module constants
   **/
-#define		SET_FUNCTION		  0x38
-#define		DISPLAY_SET			  0x0C
-#define		CLEAR_DISPLAY		  0x01
+#define		SET_FUNCTION	     0x2C  // Nibble Mode 5x10 Font
+#define		DISPLAY_SET		     0x0C
+#define		CLEAR_DISPLAY       0x01
 #define		MODE_RT_NOSHIFT     0x06
 #define     DDRAM_ADDR_INIT     0x80
 #define     HOME_ADDRESS        0x02
@@ -84,7 +79,6 @@
 #define     DISPLAY_LEFT        0x18
 #define     TOP_LINE            0x80
 #define     BOTTOM_LINE         0xC0
-#define     CURRENT_LOCATION    0
 
 /**
   * LCD Driver Function Declarations
@@ -98,6 +92,6 @@ void lcd_goHome();
 void lcd_printString(char *string, int delay, int line);
 void lcd_printChar(char *letter);
 void lcd_shift(int shift);
-volatile unsigned char lcd_readCursorData();
+unsigned char lcd_readCursorData();
 
 #endif /* MSP430_LCD_H_ */
